@@ -31,10 +31,15 @@
             <scope>test</scope>
         </dependency>
 
-        <!--        Local Module-->
+        <!-- Local Module -->
         <dependency>
             <groupId>id.putra</groupId>
             <artifactId>library</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>id.putra</groupId>
+            <artifactId>user-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

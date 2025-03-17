@@ -1,10 +1,10 @@
-package id.putra.library;
+package id.putra.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LibraryApplicationTests {
+class UserServiceApplicationTests {
 
     @Test
     void contextLoads() {
