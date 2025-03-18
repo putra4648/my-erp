@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>id.putra</groupId>
-    <artifactId>user-service</artifactId>
+    <artifactId>accounting-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>user-service</name>
-    <description>user-service</description>
+    <name>accounting-service</name>
+    <description>accounting-service</description>
     <url/>
     <licenses>
         <license/>
