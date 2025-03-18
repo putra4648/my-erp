@@ -40,17 +40,41 @@ entity Department {
     name: string
 }
 
+entity Item {
+    * id: string <<generated>>
+    department_id: string <<FK>>
+    user_request_by: string <<FK>>
+    --
+    status: string
+    name: string
+    price: string
+}
+
+entity ItemApproval {
+    id: string <<generated>>
+    approved_by: string <<FK>>
+    --
+    level: number
+}
+
 entity DepartmentApproval {
     department_id: string <<FK>>
     user_id: string <<FK>>
+    item_id: string
     --
 }
 
 User ||--|{ Authority
 User ||--|{ Department
+User ||--|{ Item
+
 Group ||--|{ GroupAuthority
 Group ||--|{ GroupMembers
 
 Department ||--|{ DepartmentApproval
+DepartmentApproval ||--|{ Item
+
+Item ||--|| ItemApproval
+ItemApproval ||--|| User
 
 @enduml
