@@ -1,0 +1,56 @@
+@startuml
+entity User {
+    * id: string <<generated>>
+    --
+    username: string
+    password: string
+    isEnabled: boolean
+}
+
+entity Authority {
+    * id: string <<generated>>
+    user_id: string <<FK>>
+    --
+    authority: string
+}
+
+entity Group {
+    * id: string <<generated>
+    --
+    group_name: string
+}
+
+entity GroupAuthority {
+    * group_id: string <<FK>>
+    --
+    authority: string
+}
+
+entity GroupMembers {
+    * id: string <<generated>>
+    --
+    user_id: string
+    group_id: string
+}
+
+entity Department {
+    id: string <<generated>>
+    user_id: string <<FK>>
+    --
+    name: string
+}
+
+entity DepartmentApproval {
+    department_id: string <<FK>>
+    user_id: string <<FK>>
+    --
+}
+
+User ||--|{ Authority
+User ||--|{ Department
+Group ||--|{ GroupAuthority
+Group ||--|{ GroupMembers
+
+Department ||--|{ DepartmentApproval
+
+@enduml
