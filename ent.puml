@@ -1,9 +1,14 @@
 @startuml
+'https://www.coderbased.com/p/multi-level-approval-system-design'
+
+scale 0.7
 entity User {
     * id: string <<generated>>
     --
     username: string
     password: string
+    fullname: string
+    position: string
     isEnabled: boolean
 }
 
@@ -45,24 +50,66 @@ entity Item {
     department_id: string <<FK>>
     user_request_by: string <<FK>>
     --
-    status: string
     name: string
-    price: string
+    price: number
+    qty: number
 }
 
-entity ItemApproval {
-    id: string <<generated>>
-    approved_by: string <<FK>>
+entity ApprovalWorkflow {
+    * id: string <<generated>>
+    --
+    min: number
+    max: number
+    weight: number
+}
+
+entity ApprovalWorkflowUser {
+    * id: string <<generated>>
+    --
+    workflow_id: string
+    user_id: string
+}
+
+entity ApprovalWorkflowStage {
+    * id: string <<generated>>
+    workflow_id: string <<FK>>
+    ---
+    level: number
+    approver_type: ApproverType
+    approver_ids: text[]
+    approve_count: number,
+    approve_superior_level: number
+    created_at: Datetime,
+    updated_at: Datetime
+}
+
+entity ApprovalTransaction {
+    * id: string <<generated>>
+    item_id: string <<FK>>
+    workflow_id: string <<FK>>
+    workflow_stage_id: string <<FK>>
     --
     level: number
+    approver: text[]
+    approve_count: number
+    status: ApprovalStatus
+    created_at: Datetime
+    updated_at: Datetime
 }
 
-entity DepartmentApproval {
-    department_id: string <<FK>>
-    user_id: string <<FK>>
-    item_id: string
-    --
+enum ApproverType {
+    SUPERIOR
+    EMPLOYEE
 }
+
+enum ApprovalStatus {
+    PENDING
+    WAITING
+    APPROVED
+    REJECT
+}
+
+
 
 User ||--|{ Authority
 User ||--|{ Department
@@ -71,10 +118,11 @@ User ||--|{ Item
 Group ||--|{ GroupAuthority
 Group ||--|{ GroupMembers
 
-Department ||--|{ DepartmentApproval
-DepartmentApproval ||--|{ Item
+ApprovalWorkflow ||--|{ ApprovalWorkflowUser
+ApprovalWorkflowUser ||--|{ ApprovalWorkflowStage
+ApprovalWorkflowStage ||--|{ ApprovalTransaction
+Item ||--|{ ApprovalTransaction
+ApprovalWorkflow ||--|{ ApprovalTransaction
 
-Item ||--|| ItemApproval
-ItemApproval ||--|| User
 
 @enduml
